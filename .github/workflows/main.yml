@@ -31,6 +31,20 @@ jobs:
      needs: [CI]
      runs-on: ubuntu-latest
      steps:
-      - run: echo "Obter código"
+      - name : Obtendo o Codigo
+        uses: actions/checkout@v4.2.2
+
+      - uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
+          
+
+
       - run : echo "Configurar o KubeConfig"
-      - run : echo "Executar o Apply"
+      - uses: Azure/k8s-deploy@v5
+        with:
+          manifests: |
+            k8s/deployment.yaml
+          images: |
+            cteylor/fakeshop:v${{ github.run_number }}
