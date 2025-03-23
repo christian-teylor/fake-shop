@@ -74,7 +74,7 @@ kind: Service
 metadata:
   name: fakeshop
 spec:
-  type: LoadBalance
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 5000
